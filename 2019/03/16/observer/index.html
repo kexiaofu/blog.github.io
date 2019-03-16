@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>LiangJF`s Blog</title>
+    <link rel="stylesheet" href="/kexiaofu.github.io/css/style.css">
+    <link rel="stylesheet" href="/kexiaofu.github.io/css/gitment.css">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-title">
+
+        </div>
+        <nav class="header-nav">
+            
+            <a href="/kexiaofu.github.io/" class="header-nav-link">
+                首页
+            </a>
+            
+
+            
+            <a href="/kexiaofu.github.io/archives" class="header-nav-link">
+                归档
+            </a>
+            
+
+            
+
+            
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/kexiaofu.github.io/" class="mobile-nav-title-link">liang jiafu's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/kexiaofu.github.io/" class="mobile-nav-link">首页</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/kexiaofu.github.io/archives" class="mobile-nav-link">归档</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/kexiaofu.github.io/tags" class="mobile-nav-link">标签</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/kexiaofu.github.io/about/" class="mobile-nav-link">关于</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">Observer</h2>
+            <div class="post-meta">
+                <span class="post-time">2019-03-16</span>
+                
+                <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>Observer 是 <code>Vue</code> 监看数据变化，以及将订阅者塞到订阅者集合 <code>Dep</code> 里面去，数据发生变化时会通知对应 <code>Watcher</code> 来进行更新 的主要代码</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Dep <span class="keyword">from</span> <span class="string">'./dep'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Obverser</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(data) &#123;</span><br><span class="line">    <span class="keyword">this</span>.observer(data);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始递归监看数据</span></span><br><span class="line">  observer(data) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!data || <span class="keyword">typeof</span> data !== <span class="string">'object'</span>) <span class="keyword">return</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.getDefinePropertyValue(data, key);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监看对应的数据，如data.message = '123',会监看data里面的 message的值</span></span><br><span class="line">  getDefinePropertyValue(data, key) &#123;</span><br><span class="line">    <span class="keyword">let</span> value = data[key]; <span class="comment">// 缓存对应的值</span></span><br><span class="line">    <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep(); <span class="comment">// 创建订阅者集合</span></span><br><span class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span>; <span class="comment">// 缓存对象的this</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value !== <span class="string">'object'</span>) &#123;</span><br><span class="line">      <span class="built_in">Object</span>.defineProperty(data, key, &#123; <span class="comment">// 这是监听对象的方法</span></span><br><span class="line">        enumerable: <span class="literal">true</span>, <span class="comment">// 可枚举对象属性</span></span><br><span class="line">        configurable: <span class="literal">true</span>, <span class="comment">// 可删除对象属性</span></span><br><span class="line">        <span class="keyword">get</span>() &#123;</span><br><span class="line">          <span class="keyword">if</span> (Dep.target !== <span class="literal">null</span>) &#123; <span class="comment">// 如果存在这个对象的订阅，则将它放到订阅者集合里面去</span></span><br><span class="line">            dep.addSub(Dep.target);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> value;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">set</span>(newVal) &#123;</span><br><span class="line">          <span class="keyword">if</span> (newVal !== data[key]) &#123;</span><br><span class="line">              self.observer(newVal); <span class="comment">// 监听新增的属性</span></span><br><span class="line">              value = newVal;</span><br><span class="line">              dep.notify(); <span class="comment">// 属性值发生了更新，通知所有的订阅者</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// data[key]还是一个对象，递归访问</span></span><br><span class="line">      <span class="keyword">this</span>.observer(data[key]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/kexiaofu.github.io/2019/03/16/html/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Vue绑定的HTML模板</span>
+                <span class="nav-mobile">上一篇</span>
+            </a>
+        
+        
+            <a class="next" href="/kexiaofu.github.io/2019/03/16/mvvm/">
+                <span class="nav-default">MVVM</span>
+                <span class="nav-mobile">下一篇</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+    
+
+    
+
+    
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            &copy;
+            
+            
+            2019
+            &nbsp;<i class="iconfont icon-heart"></i>&nbsp;
+            <a target="_blank" href="https://github.com/iJinxin">liang jiafu</a>
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme -
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>
+        </p>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/kexiaofu.github.io/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    
+
+</script>
+</html>

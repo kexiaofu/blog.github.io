@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>LiangJF`s Blog</title>
+    <link rel="stylesheet" href="/kexiaofu.github.io/css/style.css">
+    <link rel="stylesheet" href="/kexiaofu.github.io/css/gitment.css">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-title">
+
+        </div>
+        <nav class="header-nav">
+            
+            <a href="/kexiaofu.github.io/" class="header-nav-link">
+                首页
+            </a>
+            
+
+            
+            <a href="/kexiaofu.github.io/archives" class="header-nav-link">
+                归档
+            </a>
+            
+
+            
+
+            
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/kexiaofu.github.io/" class="mobile-nav-title-link">liang jiafu's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/kexiaofu.github.io/" class="mobile-nav-link">首页</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/kexiaofu.github.io/archives" class="mobile-nav-link">归档</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/kexiaofu.github.io/tags" class="mobile-nav-link">标签</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/kexiaofu.github.io/about/" class="mobile-nav-link">关于</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">MVVM</h2>
+            <div class="post-meta">
+                <span class="post-time">2019-03-16</span>
+                
+                <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>MVVM 是调用这个简易的框架的主体部分</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Compile <span class="keyword">from</span> <span class="string">'./compile.ts'</span>;</span><br><span class="line"><span class="keyword">import</span> Obverser <span class="keyword">from</span> <span class="string">"./observer"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MVVM</span> </span>&#123;</span><br><span class="line">  el: any;</span><br><span class="line">  data: object;</span><br><span class="line">  <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.el = options.el;</span><br><span class="line">    <span class="keyword">this</span>.data = options.data;</span><br><span class="line">    <span class="keyword">new</span> Obverser(<span class="keyword">this</span>.data); <span class="comment">// 开始监看数据变化</span></span><br><span class="line">    <span class="keyword">this</span>.proxyData(<span class="keyword">this</span>.data);<span class="comment">// 代理数据</span></span><br><span class="line">    <span class="keyword">new</span> Compile(<span class="keyword">this</span>.el, <span class="keyword">this</span>); <span class="comment">// 编译</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 将vm.data.message 代理为 vm.message</span></span><br><span class="line">  proxyData(data) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>, key, &#123;</span><br><span class="line">        <span class="keyword">get</span>() &#123;</span><br><span class="line">          <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">set</span>(newValue) &#123;</span><br><span class="line">          data[key] = newValue;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/kexiaofu.github.io/2019/03/16/observer/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Observer</span>
+                <span class="nav-mobile">上一篇</span>
+            </a>
+        
+        
+            <a class="next" href="/kexiaofu.github.io/2019/03/16/watcher/">
+                <span class="nav-default">watcher</span>
+                <span class="nav-mobile">下一篇</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+    
+
+    
+
+    
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            &copy;
+            
+            
+            2019
+            &nbsp;<i class="iconfont icon-heart"></i>&nbsp;
+            <a target="_blank" href="https://github.com/iJinxin">liang jiafu</a>
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme -
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>
+        </p>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/kexiaofu.github.io/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    
+
+</script>
+</html>

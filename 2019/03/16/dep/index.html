@@ -68,119 +68,45 @@
 </header>
 <div class="main">
     <div class="content-inner">
-        <section class="archive">
-    
-    <div class="archive-title">
-
-    </div>
-    
-
-    
-    
-        
-            
-            
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">Dep</h2>
+            <div class="post-meta">
+                <span class="post-time">2019-03-16</span>
                 
-                <div class="archive-timeline">
-                    <h2 class="archive-year">2019</h2>
-                </div>
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/compile/">Compile</a>
-                </span>
+                <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
             </div>
-        
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>Dep 是将 <code>Watcher</code> 集合起来进行管理的容器</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 订阅者监看方法</span></span><br><span class="line"><span class="comment">// 因为每个在html出现的对应的data，都会有一个订阅者，所以需要一个集体管理的方法，可以通知订阅者信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  subs = []; <span class="comment">// 订阅者的集合</span></span><br><span class="line">  <span class="keyword">static</span> target = <span class="literal">null</span>; <span class="comment">// 具体的订阅者</span></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 添加新的订阅者</span></span><br><span class="line">  addSub(watcher) &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.push(watcher)</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 通知订阅者，开始更新</span></span><br><span class="line">  notify() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      key.update();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
     
         
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/dep/">Dep</a>
-                </span>
-            </div>
         
-
+            <a class="next" href="/kexiaofu.github.io/2019/03/16/html/">
+                <span class="nav-default">Vue绑定的HTML模板</span>
+                <span class="nav-mobile">下一篇</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
     
-        
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/html/">Vue绑定的HTML模板</a>
-                </span>
-            </div>
-        
-
-    
-        
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/mvvm/">MVVM</a>
-                </span>
-            </div>
-        
-
-    
-        
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/observer/">Observer</a>
-                </span>
-            </div>
-        
-
-    
-        
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-15
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/15/vue深入学习/">Vue的深入学习</a>
-                </span>
-            </div>
-        
-
-    
-        
-            
-            
-            <div class="archive-post">
-                <span class="archive-post-time">
-                    03-16
-                </span>
-                <span class="archive-post-title">
-                    <a class="archive-post-link" href="/kexiaofu.github.io/2019/03/16/watcher/">watcher</a>
-                </span>
-            </div>
-        
-
-    
-</section>
+</div>
+<div id="comment-container"></div>
     </div>
 </div>
 <footer class="footer-social">
