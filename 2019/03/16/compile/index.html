@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>LiangJF`s Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-title">
+
+        </div>
+        <nav class="header-nav">
+            
+            <a href="/" class="header-nav-link">
+                首页
+            </a>
+            
+
+            
+            <a href="/archives" class="header-nav-link">
+                归档
+            </a>
+            
+
+            
+
+            
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/" class="mobile-nav-title-link">liang jiafu's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/" class="mobile-nav-link">首页</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/archives" class="mobile-nav-link">归档</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/tags" class="mobile-nav-link">标签</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/about/" class="mobile-nav-link">关于</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">Compile</h2>
+            <div class="post-meta">
+                <span class="post-time">2019-03-16</span>
+                
+                <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>Compile 是 <code>Vue</code> 编译模板的主要代码</p>
+<a id="more"></a>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Watcher <span class="keyword">from</span> <span class="string">'./watcher'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> Compile &#123;</span><br><span class="line">  el: <span class="built_in">any</span>;</span><br><span class="line">  fragment: <span class="built_in">any</span>;</span><br><span class="line">  data: <span class="built_in">any</span>;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params">el, data</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (data.hasOwnProperty(<span class="string">'data'</span>)) &#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data.data;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      alert(<span class="string">'没有传入data字段'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.el = <span class="keyword">typeof</span> el === <span class="string">'string'</span> ? <span class="built_in">document</span>.querySelector(el) : el;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.el) &#123;</span><br><span class="line">      <span class="keyword">this</span>.fragment = <span class="keyword">this</span>.createFragment(<span class="keyword">this</span>.el);</span><br><span class="line">      <span class="keyword">this</span>.compile(<span class="keyword">this</span>.fragment);</span><br><span class="line">      <span class="keyword">this</span>.el.appendChild(<span class="keyword">this</span>.fragment);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建html碎片</span></span><br><span class="line">  createFragment(el) &#123;</span><br><span class="line">    <span class="keyword">let</span> node = <span class="literal">null</span>, frag = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">      <span class="comment">// 如果一个元素被 appendChild 到 html碎片（fragment）里面去，那么原来的body会失去这个元素</span></span><br><span class="line">    <span class="keyword">while</span>(node = <span class="keyword">this</span>.el.firstChild) &#123;</span><br><span class="line">      frag.appendChild(node);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> frag;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 开始编译</span></span><br><span class="line">  compile(el) &#123;</span><br><span class="line">    <span class="keyword">let</span> nodes = <span class="built_in">Array</span>.from(el.childNodes);</span><br><span class="line">    nodes.forEach(<span class="function"><span class="params">node</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.nodeType(node) === <span class="number">1</span>) &#123; <span class="comment">// 如果这个节点是元素节点，那么还需要递归深入</span></span><br><span class="line">        <span class="keyword">this</span>.compileElement(node); <span class="comment">// 检查元素是否含有对应的指令</span></span><br><span class="line">        <span class="keyword">this</span>.compile(node); <span class="comment">// 递归</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.compileText(node); <span class="comment">// 编译文本节点，检查是否带有&#123;&#123;&#125;&#125;标志，有则进行对应值替换</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查元素是否含有指令</span></span><br><span class="line">  compileElement(el) &#123;</span><br><span class="line">    <span class="keyword">let</span> attrs = el.attributes; <span class="comment">// 获取元素所有的属性，对象，eg: [my-model=message]</span></span><br><span class="line">    <span class="built_in">Array</span>.from(attrs).forEach(<span class="function"><span class="params">attr</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> attrName = attr[<span class="string">'name'</span>]; <span class="comment">// 获取单个属性的key，eg: my-model</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.isDirective(attrName)) &#123; <span class="comment">// 判断是否含有指令</span></span><br><span class="line">        <span class="keyword">let</span> [, <span class="keyword">type</span>] = attrName.split(<span class="string">'-'</span>);</span><br><span class="line">        CompileUtil[<span class="keyword">type</span>](el, <span class="keyword">this</span>.data, attr[<span class="string">'value'</span>]); <span class="comment">// 开始调用编译工具方法的对应编译方法</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查是否含有&#123;&#123;&#125;&#125;字符</span></span><br><span class="line">  compileText(el) &#123;</span><br><span class="line">    <span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;([^&#125;]+)\&#125;\&#125;/g</span>;</span><br><span class="line">    <span class="keyword">if</span> (reg.test(el.textContent)) &#123;</span><br><span class="line">      CompileUtil[<span class="string">'text'</span>](el, <span class="keyword">this</span>.data, el.textContent)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否是指令</span></span><br><span class="line">  isDirective(attr) &#123;</span><br><span class="line">    <span class="keyword">return</span> attr.includes(<span class="string">'my-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 判断元素类型</span></span><br><span class="line">  nodeType(node) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeType;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译工具方法</span></span><br><span class="line"><span class="keyword">const</span> CompileUtil = &#123;</span><br><span class="line">    <span class="comment">// 如果检测到对应的值是对象，eg: works.name, works.children.name, 返回相对应的值</span></span><br><span class="line">  getValue(data, key) &#123;</span><br><span class="line">    <span class="keyword">let</span> okey = key.split(<span class="string">'.'</span>), len = okey.length;</span><br><span class="line">    <span class="keyword">if</span> (len === <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>  data[key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> value = data[okey[<span class="number">0</span>]];</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">        value = value[okey[i]];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="comment">// 如果同一个节点存在 &#123;&#123;a&#125;&#125; &#123;&#123;b&#125;&#125; 或者更多，需要用正则分别抽离&#123;&#123;a&#125;&#125;, &#123;&#123;b&#125;&#125;</span></span><br><span class="line">  getTextVariable(key) &#123;</span><br><span class="line">    <span class="keyword">return</span> key.match(<span class="regexp">/(\&#123;\&#123;([^&#125;]+)\&#125;\&#125;)/g</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="comment">// 抽离&#123;&#123;a&#125;&#125;，&#123;&#123;b&#125;&#125;之后，分别抽离&#123;&#123;a&#125;&#125; 里面的a值，&#123;&#123;b&#125;&#125;里面的b值</span></span><br><span class="line">  getTextKey(key) &#123;</span><br><span class="line">    <span class="keyword">return</span> key.replace(<span class="regexp">/^\&#123;\&#123;([^&#125;]+)\&#125;\&#125;/g</span>, <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> arg[<span class="number">1</span>].replace(<span class="regexp">/\s/g</span>, <span class="string">''</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="comment">// 文本节点的编译方法</span></span><br><span class="line">  text(el, data, key) &#123;</span><br><span class="line">    <span class="keyword">let</span> keyArr = <span class="keyword">this</span>.getTextVariable(key); <span class="comment">// eg: [&#123;&#123;a&#125;&#125;] 或 [&#123;&#123;a&#125;&#125;, &#123;&#123;b&#125;&#125;, &#123;&#123;works.name&#125;&#125;]</span></span><br><span class="line">    keyArr.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> realKey = <span class="keyword">this</span>.getTextKey(item); <span class="comment">// 获取 &#123;&#123;a&#125;&#125;里面的a值</span></span><br><span class="line">        <span class="comment">// 调用对应的更新方法</span></span><br><span class="line">      <span class="keyword">this</span>.updater[<span class="string">'textUpdater'</span>](el, <span class="keyword">this</span>.getValue(data, realKey), item);</span><br><span class="line">        <span class="comment">// 添加观察者，如果绑定的值发生变化，则回调</span></span><br><span class="line">      <span class="keyword">new</span> Watcher(data, realKey, <span class="function">(<span class="params">newValue, oldValue</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.updater[<span class="string">'textUpdater'</span>](el, newValue, oldValue);</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="comment">// my-model 属性的编译方法</span></span><br><span class="line">  model(el, data, key) &#123;</span><br><span class="line">    <span class="keyword">new</span> Watcher(data, key, <span class="function"><span class="params">newValue</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.updater[<span class="string">'modelUpdater'</span>](el, newValue, data);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.updater[<span class="string">'modelUpdater'</span>](el, <span class="keyword">this</span>.getValue(data, key), data);</span><br><span class="line">  &#125;,</span><br><span class="line">  updater: &#123;</span><br><span class="line">    data: <span class="literal">null</span>, <span class="comment">// 为了在input里面更新对应的值而存在</span></span><br><span class="line">    el: <span class="literal">null</span>, <span class="comment">// 为了监听对应元素的事件而存在</span></span><br><span class="line">      <span class="comment">// 文本节点更新方法</span></span><br><span class="line">    textUpdater(el, value, key) &#123;</span><br><span class="line">      el.textContent = el.textContent.replace(key, value);</span><br><span class="line">    &#125;,</span><br><span class="line">      <span class="comment">// my-model属性更新方法</span></span><br><span class="line">    modelUpdater(el, value, data) &#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data; <span class="comment">// 缓存数据</span></span><br><span class="line">      <span class="keyword">this</span>.el = el;</span><br><span class="line">      el.value = value;</span><br><span class="line">        <span class="comment">// 先移除多余事件</span></span><br><span class="line">      el.removeEventListener(<span class="string">'keyup'</span>, <span class="keyword">this</span>.modelInputEvent.bind(<span class="keyword">this</span>));</span><br><span class="line">        <span class="comment">// 绑定事件</span></span><br><span class="line">      el.addEventListener(<span class="string">'keyup'</span>, <span class="keyword">this</span>.modelInputEvent.bind(<span class="keyword">this</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">      <span class="comment">// my-model的监听事件</span></span><br><span class="line">    modelInputEvent(e) &#123;</span><br><span class="line">      <span class="keyword">let</span> attrs = e.target.attributes, attrName = <span class="string">''</span>;</span><br><span class="line">      <span class="built_in">Array</span>.from(attrs).forEach(<span class="function"><span class="params">attr</span> =&gt;</span> &#123;</span><br><span class="line">        attrName = attr[<span class="string">'name'</span>];</span><br><span class="line">        <span class="keyword">if</span> (attrName.includes(<span class="string">'my-'</span>)) &#123; <span class="comment">// 判别是否含有对应的指令</span></span><br><span class="line">          <span class="keyword">let</span> key = attr[<span class="string">'value'</span>], okey = key.split(<span class="string">'.'</span>), len = okey.length;</span><br><span class="line">          <span class="keyword">if</span> (len === <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.data[key] = e.target.value;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="comment">// 找到对应的值，将最新的值赋给它</span></span><br><span class="line">            okey.reduce(<span class="function">(<span class="params">prev, next, index</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">if</span> (index === len - <span class="number">1</span>) &#123;</span><br><span class="line">                prev[next] = e.target.value;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">return</span> prev[next];</span><br><span class="line">            &#125;, <span class="keyword">this</span>.data)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+        
+            <a class="next" href="/2019/03/15/vue深入学习/">
+                <span class="nav-default">Vue的深入学习</span>
+                <span class="nav-mobile">下一篇</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+    
+
+    
+
+    
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            &copy;
+            
+            
+            2019
+            &nbsp;<i class="iconfont icon-heart"></i>&nbsp;
+            <a target="_blank" href="https://github.com/iJinxin">liang jiafu</a>
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme -
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>
+        </p>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    
+
+</script>
+</html>

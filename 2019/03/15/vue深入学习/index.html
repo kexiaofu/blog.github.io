@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>LiangJF`s Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-title">
+
+        </div>
+        <nav class="header-nav">
+            
+            <a href="/" class="header-nav-link">
+                首页
+            </a>
+            
+
+            
+            <a href="/archives" class="header-nav-link">
+                归档
+            </a>
+            
+
+            
+
+            
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/" class="mobile-nav-title-link">liang jiafu's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/" class="mobile-nav-link">首页</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/archives" class="mobile-nav-link">归档</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/tags" class="mobile-nav-link">标签</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/about/" class="mobile-nav-link">关于</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">Vue的深入学习</h2>
+            <div class="post-meta">
+                <span class="post-time">2019-03-15</span>
+                
+                <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Vue的核心理念"><span class="toc-text">1. Vue的核心理念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-探讨Vue的双向绑定原理"><span class="toc-text">2. 探讨Vue的双向绑定原理</span></a></li></ol>
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>Vue 是一套构建用户界面的渐进式框架<br><a id="more"></a></p>
+<h2 id="1-Vue的核心理念"><a href="#1-Vue的核心理念" class="headerlink" title="1. Vue的核心理念"></a>1. Vue的核心理念</h2><blockquote>
+<p>Vue 是一套构建用户界面的渐进式框架</p>
+</blockquote>
+<p><img src="/2019/03/15/vue深入学习/1201942-20180206192057810-2139932683.png" alt="img"></p>
+<p>DOM状态只是数据状态的一个映射 即 UI=VM(State) ，当等式右边State改变了，页面展示部分UI就会发生相应改变。</p>
+<p>Vue的核心功能强调的是状态到界面的映射</p>
+<p>如下图所示，这里包含了Vue的所有部件，在声明式渲染（视图模板引擎）的基础上，我们可以通过添加组件系统、客户端路由、大规模状态管理来构建一个完整的框架。更重要的是，这些功能相互独立，你可以在核心功能的基础上任意选用其他的部件，不一定要全部整合在一起。可以看到，所说的“渐进式”，其实就是Vue的使用方式，同时也体现了Vue的设计的理念．</p>
+<p><img src="/2019/03/15/vue深入学习/1201942-20180206192837982-1983432333.png" alt="img"></p>
+<h2 id="2-探讨Vue的双向绑定原理"><a href="#2-探讨Vue的双向绑定原理" class="headerlink" title="2. 探讨Vue的双向绑定原理"></a>2. 探讨Vue的双向绑定原理</h2><p>vue的双向绑定是由数据劫持结合发布者-订阅者模式实现的。</p>
+<p>数据劫持是通过Object.defineProperty()来劫持对象的getter和setter操作，在数据变动的时候可以做一些骚操作。</p>
+<p><img src="/2019/03/15/vue深入学习/20180224115108843.png" alt="img"></p>
+<p>订阅者-发布者模式</p>
+<p>打个比方，所谓的订阅者，就像我们在日常生活中订阅报纸一样，在订阅报纸的时候，通常都得需要在报社或者一些中介机构进行注册，当有新版的报纸发刊的时候，邮递员就需要向订阅该报纸的人，依次发放报纸．</p>
+<p>所谓的订阅者，就像我们在日常生活中，订阅报纸一样。我们订阅报纸的时候，通常都得需要在报社或者一些中介机构进行注册。当有新版的报纸发刊的时候，邮递员就需要向订阅该报纸的人，依次发放报纸。</p>
+<p>订阅者注册</p>
+<p><img src="/2019/03/15/vue深入学习/20180224143819833.png" alt="img"></p>
+<p>发布者发布消息</p>
+<p><img src="/2019/03/15/vue深入学习/20180224143832479.png" alt="img"></p>
+<p>实现过程</p>
+<p><code>Observer</code> 用来监听所有属性，当属性变化时，需要通知订阅者 <code>Watcher</code> 判断是否需要更新，因为属性是多个，所以订阅者也是多个存在，所以我们需要一个消息订阅器 <code>Dep</code> 来专门收集这些订阅者，并在监听器 <code>Observer</code> 和订阅者 <code>Watcher</code> 之间进行统一的管理。<code>Compile</code>，用来对每个节点元素进行扫描和解析，并将相关指令初始化为一个订阅者 <code>Watcher</code> ，并替换模板数据和绑定相应的函数。这时候，当订阅者 <code>Watcher</code> 接收到相应属性的变化，就会执行相应的更新函数，从而更新视图。 </p>
+<p><img src="/2019/03/15/vue深入学习/20180224145638410.png" alt="img"></p>
+
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/2019/03/16/compile/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Compile</span>
+                <span class="nav-mobile">上一篇</span>
+            </a>
+        
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+    
+
+    
+
+    
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            &copy;
+            
+            
+            2019
+            &nbsp;<i class="iconfont icon-heart"></i>&nbsp;
+            <a target="_blank" href="https://github.com/iJinxin">liang jiafu</a>
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme -
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>
+        </p>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    
+
+</script>
+</html>
