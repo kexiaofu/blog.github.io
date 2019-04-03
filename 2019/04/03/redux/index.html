@@ -71,24 +71,34 @@
         <div class="posts">
     <article class="post-whole">
         <div class="post-title">
-            <h2 class="title">Dep</h2>
+            <h2 class="title">对单页面状态的思考</h2>
             <div class="post-meta">
-                <span class="post-time">2019-03-16</span>
+                <span class="post-time">2019-04-03</span>
                 
                 <span class="post-visit"> 阅读次数：<span id="busuanzi_value_page_pv"></span></span>
             </div>
         </div>
         <div class="post-toc" id="post-toc">
     <strong class="post-toc-title">目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候我们需要状态"><span class="toc-text">什么时候我们需要状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redux-的必要性"><span class="toc-text">redux 的必要性</span></a></li></ol>
     <div class="back-to-top" id="back-to-top">
         <a href="javascript:void(0);">回到顶部</a>
     </div>
 </div>
         <div class="post-content">
-            <p>Dep 是将 <code>Watcher</code> 集合起来进行管理的容器</p>
+            <p>主要是想弄清楚单页面为什么需要状态，以及什么时候该使用状态，使用状态管理的好处</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 订阅者监看方法</span></span><br><span class="line"><span class="comment">// 因为每个在html出现的对应的data，都会有一个订阅者，所以需要一个集体管理的方法，可以通知订阅者信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  subs = []; <span class="comment">// 订阅者的集合</span></span><br><span class="line">  <span class="keyword">static</span> target = <span class="literal">null</span>; <span class="comment">// 具体的订阅者</span></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 添加新的订阅者</span></span><br><span class="line">  addSub(watcher) &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.push(watcher)</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 通知订阅者，开始更新</span></span><br><span class="line">  notify() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">      key.update();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="什么时候我们需要状态"><a href="#什么时候我们需要状态" class="headerlink" title="什么时候我们需要状态"></a>什么时候我们需要状态</h3><p>状态–数据+数据更新事件</p>
+<p>以前开发多页面的时候，很少听到状态一词，需要什么数据直接请求后台，或者将数据存在本地（ <code>localStorage</code> 或 <code>sessionStorage</code> ，<code>cookie</code> 这个方面使用的情况比较少，如果是请求接口方面的相关的数据，可以从 <code>cookie</code> 获取 ），跨页面使用数据。</p>
+<h3 id="redux-的必要性"><a href="#redux-的必要性" class="headerlink" title="redux 的必要性"></a>redux 的必要性</h3><p>单页面的开发，多会使用组件式开发，那么问题来了：</p>
+<ol>
+<li><p>组件之间的通信，以及组件共用同一份数据，并且数据的更新是对多个组件生效的。那么，本地存储的数据是可以实现组件共用数据，但是一旦A组件更改了数据中的某些数据，B组件并不会跟随更新已做了更改的数据。</p>
+</li>
+<li><p>如果A组件更新了数据，B组件也更新了数据，C组件也引用了同一份数据。那么当数据发生更改，并且出了一些未知的问题，需要一个一个地去检查数据源，怎么解决多数据源对数据更新的问题？</p>
+</li>
+<li>子组件引用了父组件的数据，没毛病，孙子组件也引用了，重孙子也引用了，重重孙子也引用…..突然，某一代孙子想不开，更改了数据，由于是引用的数据，是不是会导致自父组件到最后一个孙子组件的基因突变？</li>
+</ol>
+<p>如果将数据抽离出来，单独一层，就像一颗枝节清晰的树一样，单一数据源，单一修改方法，多处次改，数据同步。</p>
 
         </div>
         
@@ -97,15 +107,9 @@
 <div class="paginator">
     
         
-            <a class="prev" href="/kexiaofu.github.io/2019/04/03/redux/">
-                <i class="iconfont icon-prev"></i>
-                <span class="nav-default">对单页面状态的思考</span>
-                <span class="nav-mobile">上一篇</span>
-            </a>
         
-        
-            <a class="next" href="/kexiaofu.github.io/2019/03/16/html/">
-                <span class="nav-default">Vue绑定的HTML模板</span>
+            <a class="next" href="/kexiaofu.github.io/2019/03/16/dep/">
+                <span class="nav-default">Dep</span>
                 <span class="nav-mobile">下一篇</span>
                 <i class="iconfont icon-next"></i>
             </a>
